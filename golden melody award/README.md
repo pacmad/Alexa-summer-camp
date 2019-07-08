@@ -1,1 +1,2 @@
-# Alexa-summer-camp
+# Golden Melody Award
+Alexa Skill for index.js
