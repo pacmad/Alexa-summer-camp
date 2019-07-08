@@ -1,0 +1,62 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "golden melody award",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "SingerIntent",
+                    "slots": [
+                        {
+                            "name": "award",
+                            "type": "awardSlot"
+                        }
+                    ],
+                    "samples": [
+                        "winner of {award}",
+                        "{award}",
+                        "the winner of {award}",
+                        "who is {award}"
+                    ]
+                }
+            ],
+            "types": [
+                {
+                    "name": "awardSlot",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "the best band"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "the best female singer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "the best male singer"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
