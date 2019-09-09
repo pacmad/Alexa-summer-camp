@@ -1,0 +1,24 @@
+{
+  "Sid": "Cloudwatch-notification",
+  "Effect": "Allow",
+  "Principal": "*",
+  "Action": "sns:Publish",
+  "Resource": "arn:aws:sns::aaaaaaaaa:alarm_topic",
+  "Condition": {
+      "StringLike": {
+          "AWS:SourceArn": "arn:aws:cloudwatch::aaaaaaaaa:alarm:cw_alarm"
+      }
+  }
+}
+{
+    "Sid": "SNS-notification",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "SQS:SendMessage",
+      "Resource": "arn:aws:sqs::aaaaaaaaa:alarm_queue",
+      "Condition": {
+        "ArnEquals": {
+          "aws:SourceArn": "arn:aws:sns::aaaaaaaaa:alarm_topic"
+        }
+      }
+}
