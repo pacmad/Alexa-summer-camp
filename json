@@ -5,20 +5,72 @@
   "Action": "sns:Publish",
   "Resource": "arn:aws:sns::aaaaaaaaa:alarm_topic",
   "Condition": {
-      "StringLike": {
-          "AWS:SourceArn": "arn:aws:cloudwatch::aaaaaaaaa:alarm:cw_alarm"
-      }
+    "StringLike": {
+      "AWS:SourceArn": "arn:aws:cloudwatch::aaaaaaaaa:alarm:cw_alarm"
+    }
   }
 }
 {
-    "Sid": "SNS-notification",
+  "Sid": "SNS-notification",
+  "Effect": "Allow",
+  "Principal": "*",
+  "Action": "SQS:SendMessage",
+  "Resource": "arn:aws:sqs::aaaaaaaaa:alarm_queue",
+  "Condition": {
+    "ArnEquals": {
+      "aws:SourceArn": "arn:aws:sns::aaaaaaaaa:alarm_topic"
+    }
+  }
+}
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
       "Effect": "Allow",
-      "Principal": "*",
-      "Action": "SQS:SendMessage",
-      "Resource": "arn:aws:sqs::aaaaaaaaa:alarm_queue",
-      "Condition": {
-        "ArnEquals": {
-          "aws:SourceArn": "arn:aws:sns::aaaaaaaaa:alarm_topic"
-        }
-      }
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "CloudwatchReadstate",
+      "Effect": "Allow",
+      "Action": "cloudwatch:DescribeAlarms",
+      "Resource": "arn:aws:cloudwatch::aaaaaaaaa:alarm:cw_alarm"
+    }
+  ]
+}
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "SqsPullMsg",
+      "Effect": "Allow",
+      "Action": [
+        "sqs:DeleteMessage",
+        "sqs:ReceiveMessage",
+        "sqs:SendMessage",
+        "sqs:GetQueueAttributes"
+      ],
+      "Resource": "arn:aws:sqs::aaaaaaaaa:alarm_queue"
+    }
+  ]
+}
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "PubNotify",
+      "Effect": "Allow",
+      "Action": "sns:Publish",
+      "Resource": "arn:aws:sns::aaaaaaaaa:alarm_topic"
+    }
+  ]
 }
